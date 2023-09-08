@@ -11,12 +11,12 @@ collection_user = database.user
 def todo_serializer(todo) -> dict:
     return {
         "id": str(todo["_id"]),
-        "title": todo["titie"],
+        "title": todo["title"],
         "description": todo["description"]
     }
 
 
-async def db_create_todo(todo: dict) -> Union[dict, bool]:
+async def db_create_todo(data: dict) -> Union[dict, bool]:
     todo = await collection_todo.insert_one(data)
     new_todo = await collection_todo.find_one({"_id": todo.inserted_id})
     if new_todo:
