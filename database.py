@@ -26,8 +26,9 @@ async def db_create_todo(data: dict) -> Union[dict, bool]:
 
 async def db_get_todos() -> list:
     todos = []
-    for todo in collection_todo.find().to_list(length=100):
+    for todo in await collection_todo.find().to_list(length=100):
         todos.append(todo_serializer(todo))
+    return todos
 
 async def db_get_single_todo(id: str) -> Union[dict, bool]:
     todo = await collection_todo.find_one({ "_id": ObjectId(id) })
