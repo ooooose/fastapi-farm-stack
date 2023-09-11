@@ -35,3 +35,10 @@ async def login(request: Request, response: Response, user: UserBody, csrf_prote
     response.set_cookie(
         key="access_token", value=f"Bearer {token}", httponly=True, samesite="none", secure=True)
     return {"message": "Successfully logged-in"}
+
+@router.post("/api/logout", response_model=SuccessMsg)
+def logout(request: Request, response: Response, csrf_protect: CsrfProtect = Depends()):
+    csrf_token = csrf_protect.get_csrf_from_headers(request.headers)
+    csrf_protect.validate_csrf(csrf_token)
+    response.set_cookie(key="access_token", value="", httponly=True, samesite="none", secure=True)
+    return {'message': 'Successfully loggd-out.'}
