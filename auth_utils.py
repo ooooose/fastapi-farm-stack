@@ -52,9 +52,9 @@ class AuthJwtCsrf():
         new_token = self.encode_jwt(subject)
         return new_token, subject
 
-    def verify_csrf_update_jwt(self, csrf_protect, headers) -> str:
+    def verify_csrf_update_jwt(self, request, csrf_protect, headers) -> str:
         csrf_token = csrf_protect.get_csrf_from_headers(headers)
         csrf_protect.validate_csrf(csrf_token)
-        subject = self.verify_jwt(subject)
+        subject = self.verify_jwt(request)
         new_token = self.encode_jwt(subject)
         return new_token
